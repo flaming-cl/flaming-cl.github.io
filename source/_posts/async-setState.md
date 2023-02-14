@@ -1,54 +1,73 @@
 ---
-title: Why is setState asynchronous?
+title: Is setState asynchronous?
 date: 2023-02-07 15:07:27
 tags: React
 ---
-This is a reflection on Dan Abramov's answer in the RFClarification: why is setState asynchronous.
+## Ideas of this article 
+SetState itself is **not an asynchronous** function, but for some reasons React makes setState **act like an async** function.
 
-## What
-Before figuring out why synchronous or asynchronous, I want to explain what they mean first.
-### What is asynchronous and what is synchronous?
-To put it simply, we expect synchronous calls to be executed immediately, while asynchronous calls will be executed after a while.
+This article will:
+1. summarize why setState() act like an async function.
+2. discuss what makes synchronous setState() to act asynchronously
+3. provide an example to tell why async or sync setState matters  
 
-### In daily life, what kind of things would you do immediately, and what would you do later?
-Obviously, things that are done immediately usually have higher priority, and things that are delayed are usually less important.
+## Why setState() act like an async function
+We expect synchronous calls to be executed immediately, while asynchronous calls to be executed after a while.
 
-Similarly, what you trigger with setState is not always the most urgent, or may even be <abbr>insignificant</abbr>. So why update it immediately in a synchronous way?
+**In daily life, what kind of things you will do immediately, and what you will do later?**
 
-## Reason 1: ensures concurrent features
-### Example
-Assume you are editing a post on social media. Meanwhile, you are receiving a bunch of notification messages.
-### What if the notification updates were immediately executed? 
-You may not be annoyed by this, when there are only a few messages. But if there are 100+ or even 1000+ new messages, your keyboard input can become sluggish, as the browser is busy with immediately processed (synchronous) new messages.
+Obviously, things that are done immediately usually have higher priority, and things delayed are usually less important. Similarly, what we trigger with setState is not always with top priority.
 
-### For the above situation, what can you do to ensure smooth text input for users?
-The solution is simple: give low priority to the message updates. When a message update encounters a high priority event, we will ask the former one to yield the main thread.
-> React could assign different priorities to setState() calls depending on where they’re coming from: an event handler, a network response, an animation, etc.
+Here comes the first reason to make setState act in an asynchronous way: **priority scheduling**. 
 
-### What is relationship between asynchronous setState calls and concurrent features?
-It is the asynchronous feature of setState that makes concurrent features (rendering with priorities) possible. If all the setState calls are executed immediately, it is not easy for us to delay its execution and make room for high priority tasks.
+> React could assign different priorities to setState() calls depending on where they’re coming from: an event handler, a network response, an animation, etc.  
+> -- Dan Abramov
 
-To future understand benefits of concurrent features, you can go to [this post](https://flaming-cl.github.io/bits-refinery/bits-refinery/2023/02/06/simple-ideas-about-React-Concurrent-mode/)
 
-## Reason 2: avoid dirty data
-Besides performance concern, dirty data is another potential cost of synchronous setState.
+### Reason 1: ensures concurrent features
+**Example**
+Assume you are receiving a bunch of notification messages, while editing a post on social media.
+
+**What happens if the notification updates were immediately executed?** 
+
+You may not be annoyed by this when there are only a few messages. But if there are 100+ or even 1000+ new messages, your keyboard input can be very sluggish, as the browser is busy updating new notifications.
+
+**For the above situation, what can you do to ensure smooth text input for users?**
+
+A good practice is: giving low priority to message updates which are not important in this case. And when a message update encounters a high priority event, we will ask the former one to yield the main thread.
+
+**Why asynchronous setState() benefits prioritized rendering (concurrent features) in React?**
+Asynchronous-like setState() makes concurrent features possible. 
+
+This is because async-like setState() makes it easier to delay execution of low priority task and make room for high priority ones.
+
+To further understand concurrent features, you can go to [this post](https://flaming-cl.github.io/post/simple-ideas-about-React-Concurrent-mode)
+
+### Reason 2: avoid dirty data
+Besides performance optimization, avoiding dirty data is another reason for us to avoid running setState() in an synchronous way.
+
 To understand this, we need to talk about the core value of React first.
 
-### React In Theory
+**React In Theory**
+
 For React, its most fundamental principle evolved from this formula:
 > UI = f(state)
 
-The idea behind it is simple: same state data leads to same UI.
-However, based on Dan’s explanation, immediately executing setState may violate React's pure function-like update process:
+The idea behind it is simple: **same input states result in same UI**.
 
-### Why synchronous setState may violate the core theory of React?
-It is hard to ensure consistency on synchronously updated states and their props.
+However, based on Dan Abramov’s explanation, running setState() synchronously may violate React's pure-function-like update processes.
 
-To ensure consistent data flow, once you immediately update a state, you also need to update its related props in time.
+**Why running synchronous setState() may violate the core value of React?**
 
-Unfortunately, there is no quick solution to such requirement.
-> You may immediately update a state, but props only update after the reconciliation and flushing.
+Because it is hard to ensure consistency on synchronously updated states and their props.
 
-So it is possible that a parent component updates one of its states immediately, but the related props received by children component have not changed yet. 
-Such inconsistency can lead to dirty data.
+States are often not isolated but come with props. To ensure consistent data flow, once you immediately update a state, you also need to update its related props in time.
+
+> However, even though you may immediately update a state, props only update after the reconciliation and flushing.
+
+For example, although a parent component updates a state immediately, the state related props received by children have to wait until reconciliation or flushing finished.
+
+**Such inconsistency can lead to dirty data.**
+
+## What makes sync setState() act asynchronously
 

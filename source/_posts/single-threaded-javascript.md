@@ -32,3 +32,7 @@ I think this makes sense, because we do not want to messed up async calls and sy
 
 When an async callback is ready, it is possible that there are still some sync tasks waiting to be execuated in the call stack. At this moment, if we allow a ready async task to jump the queue, you may get confused why a async call is execuated before your sync calls.
 ![image](https://pbs.twimg.com/media/FoeFEsiXgAE7PxT?format=png&name=900x900)
+
+### Microtask and Macrotask
+
+Microtask
