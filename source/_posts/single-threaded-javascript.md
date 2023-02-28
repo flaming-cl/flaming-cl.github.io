@@ -3,7 +3,7 @@ title: Single-threaded JavaScript
 date: 2023-02-08 14:33:14
 tags: JavaScript
 ---
-This article will illustrate synchronous/asynchronous and micro/macro tasks.
+This article will illustrate why we have synchronous and asynchronous tasks.
 ### Synchronous and Asynchronous Tasks
 In JavaScript, we have synchronous and asynchronous tasks.
 

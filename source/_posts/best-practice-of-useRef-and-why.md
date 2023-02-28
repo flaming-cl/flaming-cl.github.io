@@ -99,7 +99,8 @@ It's worth noting that `refs` does not automatically trigger a re-rendering. As 
 You may also be curious about why `console.log(isMounted)` called with `Promise` is still false. To understand this, you need a little background knowledge about the execution context of each effect in React.
 
 You can think of each render in React as a layer of dreams in the movie "Inception": 
-*Data that `useEffect` can directly access is not infinite in time and space - it can only read the execution context that was created, when the `useEffect` was called.*
+*Data that `useEffect` can directly access is not infinite in time and space.*
+Tt can only read the execution context that was created, when the `useEffect` was called.
 
 So, although each update cycle in React will create a new execution context, some hooks might still refer to its old context.
 
