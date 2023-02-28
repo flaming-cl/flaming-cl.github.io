@@ -86,6 +86,7 @@ function useIsMounted() {
 
 ## Why the above code does not work as expected?
 ### Primitive V.S. Reference Data type in JavaScript
+![image](https://user-images.githubusercontent.com/51183663/221996628-e8465f1a-21ec-4f42-838d-a6b41ad17047.png)
 When you create a copy of a primitive value, such as a string or a number, it is completely independent of the original value. In other words, changing the copy will not affect the original value in any way.
 
 However, when you make a copy of reference data, such as an object or an array, it's like duplicating a key to a house. If you use this copied key to enter the house and make any changes to the interior, these modifications will be reflected for anyone else who also has access to this house.
