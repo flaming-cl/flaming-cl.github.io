@@ -101,7 +101,7 @@ You may also be curious about why `console.log(isMounted)` called with `Promise`
 
 You can think of each render in React as a layer of dreams in the movie "Inception": 
 *Data that `useEffect` can directly access is not infinite in time and space.*
-Tt can only read the execution context that was created, when the `useEffect` was called.
+It can only read the execution context that was created, when the `useEffect` was called.
 
 So, although each update cycle in React will create a new execution context, some hooks might still refer to its old context.
 
