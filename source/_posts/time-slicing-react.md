@@ -62,7 +62,7 @@ You can think of these two like a movie screenplay and a movie on show.
 When a movie is on (the commit phase), theatres will not suddenly stop playing or change its order of scenes. Just like React will not draw some semi-calculated UI or suddenly stop the commit phase.
 
 ## Interruptible Work Loop
-Before version 16, React reconciler is implemented by call stack recursion. However, stack Reconciliation will not allow pauses on a running task during the render phase.
+Before version 16, React reconciler is implemented by call stack recursion. However, stack Reconciliation will not allow pauses on the running render phase.
 As mentioned earlier, a high performance render phase is time sliced and interruptible. To implement this, we can change the call stack recursion to conditional while loop recursion:
 ```js
 function workLoop(deadline) {

@@ -14,7 +14,7 @@ Just like shadows in the eyes of prisoners are results of sun reflection and rea
 
 ### What is under the hood
 Before we see any changes in an application, React does three things: Scheduling, Rendering and commit. What are these? In plain English, they are just:
-- Scheduling 🗓️: schedule and manage tasks 
+- Scheduling 🗓️: schedule and manage tasks to run
 - Render 🔎 🌲 🏁: figure out changes made in React applications
 - Commit ☑️ : apply these changes to browser DOM
 

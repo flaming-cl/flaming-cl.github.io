@@ -11,8 +11,10 @@ So there is no magic for React to simultaneously handle user events while render
 
 ### If so, what does React do to avoid stutters when running CPU heavy tasks?
 In fact, React tries to avoid CPU bottlenecks by running one task, stopping it, running another, and so forth.
-Sounds like a micro operating system, right?
-But concurrent features will not allow tasks to freely compete for sources, instead they will label some tasks with low priority. This means these low priority tasks will yield the main thread to more urgent tasks to ensure performance.
+Sounds like a micro operating system, right? 
+
+But concurrent features will not allow tasks to freely compete for sources.   
+Instead, they will label different tasks with different priority: low priority running tasks will yield the main thread to high priority tasks to ensure performance.
 
 This is quite similar to how we answer a second phone call:
 
@@ -21,8 +23,7 @@ Since a food delivery call is more urgent than a casual chat, we hold the chat a
 
 ![calls](https://user-images.githubusercontent.com/51183663/217071662-a89bd48e-beb5-4a82-ab62-7f36f7ab15fe.png)
 
-React does the same thing. It can pause a less prioritized rendering task and yield to more urgent tasks, such as keyboard events which need immediate responds.
-
+React does the same thing. It can pause a less prioritized rendering task and yield to more urgent tasks, such as keyboard events. This is implemented as concurrent features since React 18.
 ### Can you give some examples about React concurrent features?
 Concurrent features: startTransition(), useTransition(), useDeferredValue()
 By using the above APIs, you are telling React to give lower priority to things you put in them. 

@@ -3,36 +3,52 @@ title: Single-threaded JavaScript
 date: 2023-02-08 14:33:14
 tags: JavaScript
 ---
-### Single-threaded JavaScript
-The JavaScript engine is single threaded.
+This article will illustrate synchronous/asynchronous and micro/macro tasks.
+### Synchronous and Asynchronous Tasks
+In JavaScript, we have synchronous and asynchronous tasks.
 
-This means it only does one thing at a time in the call stack, like the only phone booth in town that only allows one person to make phone calls.
+**Synchronous Tasks**
+Synchronous tasks are processed immediately, and they can block JavaScript execution until the running task is completed.
 
-Also, function calls that are waiting to be executed are like people who are waiting outside a booth for phone calls.
+**Asynchronous Tasks**
+Asynchronous tasks, such as I/O or network requests, often require interaction with threads other than the JS engine main thread to obtain data for incoming execution.
 
-![image](https://pbs.twimg.com/media/FoeFDZfX0AA1Fqn?format=jpg&name=medium)
-### Sync and Aysnc Events
-In JavaScript, we have sync and async calls.
+As the main thread is not responsible for I/O or network jobs, it really doesn't need to wait for completion of long-running asynchronous tasks. To improve efficiency, JavaScript asks asynchronous tasks to yield the main thread for the next task, and will execute on ready asynchronous callbacks later.
 
-When it comes to our phone booth story, we also have two kinds of people:
-- People who can start their phone call immediately (sync)
-- People who just stay in the booth , and wait for others to be ready and start a call (async)
+---
 
-No one would like to be kept waiting outside of a phone booth, but only to see someone stay in the booth doing nothing.
+#### Illustration for Asynchronous Tasks
+![queuing](https://user-images.githubusercontent.com/51183663/219988659-2f282ff1-2788-49e5-adb1-dae052604aa5.png)
+To better understand asynchronous tasks, let's look at an example of working as a counter staff at McDonald's. Here is a typical scenario of a counter staff's job:
+1. have customers **waiting in line** before serving them
+2. **serve** customer A to order food at the counter
+3. tell customer A to **wait for food to be cooked**, and start serving customer B
+4. when customer A's meal is ready, notify A to be back, pass meals to A and **complete service**
 
-An efficient JavaScript engine also does not allow async functions to occupy the call stack and have sync ones to wait.
+Let's take a look at how working as a counter staff at McDonald's is similar to task processing in JavaScript:
+- **JavaScript is single-threaded, handling one task at a time.** 
+The counter staff only serves one customer at a time.
+- **JavaScript passes asynchronous tasks to web APIs, let callbacks of async calls to be executed later, and begin processing the next task.**
+Food ordered by customer A is not cooked yet. The counter staff asks the kitchen to prepare the meal, tells customer A to go back later, and start serving customer B.
+- **JavaScript keeps on ready asynchronous tasks waiting in queue before execution.**
+The way customers wait in queue is quite similar to how on ready asynchronous tasks wait in the task queue, as they all follow a first in first out manner.
 
-### Callback Queue and Call Stack
-So the JavaScript engine will let the sync calls to stay in the call stack, and puts async calls aside for a while.
+#### Illustration for Synchronous Tasks
+**In JavaScript, synchronous tasks are executed immediately and before the execution of async tasks.**
 
-For those async calls, once they are ready to be executed, they will be pushed into a callback queue, waiting to be back to the call stack.
-Right, they are not pushed into the call stack immediately. Instead, they will be back until the call stack has finished its existing sync calls.
+The counter staff’s analogy can also be used to explain synchronous tasks, as if food ordered by customer B is in the holding cabinet and ready for picking up.   
+In this case, the counter staff can directly pass the meal to and finish service for customer B, while customer A is still waiting for the meal to be ready.
 
-I think this makes sense, because we do not want to messed up async calls and sync calls.
+---
 
-When an async callback is ready, it is possible that there are still some sync tasks waiting to be execuated in the call stack. At this moment, if we allow a ready async task to jump the queue, you may get confused why a async call is execuated before your sync calls.
-![image](https://pbs.twimg.com/media/FoeFEsiXgAE7PxT?format=png&name=900x900)
 
-### Microtask and Macrotask
+### Inside asynchronous tasks: Microtask and Macrotask
+To illustrate this, let's modify our previous story a bit. Now the McDonald's is inside a train station. It is common that some customers have their train leaving soon and ask other customers if they can cut in line to place their order soon.
 
-Microtask
+**This scenario emphasizes the need for having both microtasks and macrotasks:** we want to make it possible for high priority tasks to cut in line and be executed ahead of less prioritized ones.
+
+As a result, microtasks are designed to be prioritized and executed earlier, while macrotasks are less urgent and can be deferred. In other words, microtasks will be executed before macrotasks in JavaScript.
+
+So far, we can infer the execution order of the three types of tasks is: 
+> synchronous tasks -> microtasks -> macrotasks.
+
