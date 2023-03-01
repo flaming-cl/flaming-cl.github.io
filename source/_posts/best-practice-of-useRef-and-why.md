@@ -105,7 +105,7 @@ It can only read the execution context that was created, when the `useEffect` wa
 
 So, although each update cycle in React will create a new execution context, some hooks might still refer to its old context.
 
-This is why the Promise `console.log(isMounted)` still showed the `isMounted` value, even after `unmount()` triggered a new update cycle.
+This is why the Promise `console.log(isMounted)` still showed the initial `isMounted` value, even after `unmount()` triggered a new update cycle.
 
 ## How should we modify the above code to make it work as expected?
 Before answering this question, let's do another quiz:    
