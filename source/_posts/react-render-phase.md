@@ -4,7 +4,7 @@ date: 2023-01-13 08:41:00
 tags: React
 ---
 ## Recap: Time Sliced Work Loop
-From the [time slicing](https://flaming-cl.github.io/bits-refinery/2022/09/28/time_slicing_react/) post, we have known React implements an interruptible render phase by a conditional while loop: once <abbr>shouldYield</abbr> turns True, the current reconciliation job can be paused, leaving the main thread to more prioritized jobs, like a user event.
+From the [time slicing](https://flaming-cl.github.io/post/time-slicing-react) post, we have known React implements an interruptible render phase by a conditional while loop: once <abbr>shouldYield</abbr> turns True, the current reconciliation job can be paused, leaving the main thread to more prioritized jobs, like a user event.
 ```js
 function workLoop(deadline) {
     let shouldYield = false

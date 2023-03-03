@@ -42,7 +42,7 @@ After V16, React started to embrace time slicing to ensure an interruptible rend
 This means React can insert urgent browser tasks among small tasks from the render phase to avoid stutter.
 
 ![217070500-dc1bfbcf-31a5-4158-8d19-7870dbf99071](https://user-images.githubusercontent.com/51183663/217111897-7dacf96a-a574-410b-865b-c5e8ce3c3f5a.png)
-To understand more about time slicing, go to [this post](https://flaming-cl.github.io/bits-refinery/bits-refinery/2022/09/28/time-slicing-react/)
+To understand more about time slicing, go to [this post](https://flaming-cl.github.io/post/time-slicing-react)
 
 ## References
 [1] [Visualization of async rendering and synchronous rendering in React, Andrew Clark](https://twitter.com/acdlite/status/977291318324948992)

@@ -84,7 +84,7 @@ function workLoop(deadline) {
 
 ## Fiber Reconciler
 This interruptable reconciler is called Fiber reconciler in React.
-To know more about React Fiber, take a look at this post first: [React Fiber Tree](https://flaming-cl.github.io/bits-refinery/2022/11/22/react-fiber-tree/).
+To know more about React Fiber, take a look at this post first: [React Fiber Tree](https://flaming-cl.github.io/post/react-fiber-tree).
 
 ## References
 [1] [Sneak Peek: Beyond React 16, Dan Abramov](https://reactjs.org/blog/2018/03/01/sneak-peek-beyond-react-16.html)
