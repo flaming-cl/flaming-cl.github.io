@@ -37,12 +37,17 @@ The way customers wait in queue is quite similar to how on ready asynchronous ta
 **In JavaScript, synchronous tasks are executed immediately and before the execution of async tasks.**
 
 The counter staff’s analogy can also be used to explain synchronous tasks, as if food ordered by customer B is in the holding cabinet and ready for picking up.   
+
 In this case, the counter staff can directly pass the meal to and finish service for customer B, while customer A is still waiting for the meal to be ready.
+
+Here, service for customer B is like a synchronous task, and service for customer A is like an asynchronous task. 
 
 ---
 
 
 ### Inside asynchronous tasks: Microtask and Macrotask
+![trainstation](https://user-images.githubusercontent.com/51183663/222218194-453425c4-ea45-4288-94c7-b4b3daeb74f4.png)
+
 To illustrate this, let's modify our previous story a bit. Now the McDonald's is inside a train station. It is common that some customers have their train leaving soon and ask other customers if they can cut in line to place their order soon.
 
 **This scenario emphasizes the need for having both microtasks and macrotasks:** we want to make it possible for high priority tasks to cut in line and be executed ahead of less prioritized ones.

@@ -1,10 +1,10 @@
 ---
-title: Questions About React concurrent features
+title: Ideas behind concurrent features
 date: 2023-02-06 12:21:10
 tags: React
 ---
 
-<summary>Do React concurrent features mean multitasking?</summary>
+### Do React concurrent features mean multitasking?
 No. React concurrent features are not about multitasking.
 This is because the JavaScript engine is single-threaded (can only do one thing at one time).
 So there is no magic for React to simultaneously handle user events while rendering a large list.

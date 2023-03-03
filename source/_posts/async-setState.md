@@ -19,7 +19,7 @@ Although `setState()` is not inherently asynchronous, React has designed it to b
 ## Why setState() act like an async function
 (This section is a recap on Dan Abramov's response to the question posed in [RFClarification: why is setState asynchronous?](https://github.com/facebook/react/issues/11527#issuecomment-360199710))
 
-In daily life, we tend to prioritize tasks that require immediate attention over those that can be completed later. Similarly, not every state update triggered by `setState()` is of the highest priority.
+In daily life, tasks that require immediate attention are important to us, while tasks we procrastinate on are often less critical. Similarly, not every state update triggered by `setState()` is of the highest priority.
 
 This is where the first reason of asynchronously `setState` comes into play: priority scheduling.
 > React could assign different priorities to setState() calls depending on where they’re coming from: an event handler, a network response, an animation, etc.
