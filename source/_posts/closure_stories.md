@@ -77,7 +77,7 @@ lifeInUK(); // "🌶️ beef noodles is my favorite food."
 ```
 
 Let’s recap the concept of closure:
-- If a closure is working, there must involve two different lexical scopes:
+- When there is a closure, it must involve two different lexical scopes:
   - one is the birth lexical scope A, where the function was defined.
   - the other is the lexical scope B, where the function is called later.
 - Even if the function leaves its birthplace closure A and runs in another lexical scope, it still remembers some variables defined in A.

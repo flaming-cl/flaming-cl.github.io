@@ -46,10 +46,48 @@ For React, its most fundamental principle evolved from this formula:
 
 The concept behind this idea is straightforward: if you have the same input states for your application, it should always produce the same user interface (UI).
 
-However, running `setState()` synchronously may violate React's pure-function-like update processes:
+However, running `setState()` synchronously may violate React's pure-function-like update processes: **It is hard to ensure consistency on synchronously updated states and their props.**  
 
-**It is hard to ensure consistency on synchronously updated states and their props.**
 When a sync `setState()` is fired, its related props have to wait for reconciliation or flushSync to happen for corresponding updates. Such inconsistency can lead to unpredictable state updates in a React App.
+
+To feel such consistency, you can try this example:
+```jsx
+function App() {
+  let [count, updateCount] = useState(0);
+  console.log('render cycle', count);
+
+  const clickMe = () => {
+    updateCount(count + 1);
+    console.log('click me:', count);
+  }
+
+  const clickFox = () => {
+    count += 1;
+    console.log('click fox:', count);
+  }
+
+  return (
+  <>
+    <button onClick={clickMe}>click me</button>
+    <button onClick={clickFox}>click fox</button>
+    <Child count={count} updateCount={updateCount}/>
+  </>
+  )
+}
+
+function Child({ count, updateCount }) {
+  const updateOnChild = () => updateCount(count + 1);
+  return (<button onClick={updateOnChild}>{count}</button>)
+}
+```
+In the above example, `clickMe` is a function that calls `updateCount` asynchronously and will trigger a re-rendering of this App. Such characteristics ensure consistency between the `count` state, and its corresponding `props` passed to the Child component.
+
+If you try `clickFox`, every time when you click on `click fox`, a new value of count is immediately logged to the console. However, while "click fox" immediately updates the `count` state, the prop `count` still refers to the old value resulted from the last reconciliation.
+
+Such inconsistency in states and props can cause unpredictable behavior in an App.
+
+Please note: directly updating a state by `"="` will not cause any re-rendering in a React App, unless we update the state with setState or useState hooks. 
+Here we only use the `click fox` example to mock the situation that a state changes inconsistently with related props, and its potential issues.
 
 ## What makes sync setState() act asynchronously
 Every time `renderRoot` or `setState` is triggered, React doesn't immediately start rendering in a React App. Instead, React will first schedule the updates, assigning different priority levels to each task and combining multiple tasks into one.
