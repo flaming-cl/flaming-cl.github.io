@@ -4,9 +4,9 @@ date: 2023-02-28 15:54:29
 tags: #React
 ---
 
-The idea for this blog post was sparked by a React quiz on Big Front-End titled "useEffect." 
 In this article, we'll be discussing a best practice for using useRef in React, as well as delving into the reasons behind it.
-# <span id='jump-q-21'>21. useEffect() II</span>
+
+Let's first look at a piece of code. What will be logged by this code in the end?
 ```js
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom'

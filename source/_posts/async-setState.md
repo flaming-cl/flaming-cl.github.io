@@ -98,8 +98,9 @@ The way `updateQueue` implemented gives `setState()` asynchronous behaviors:
 - `concurrent featured setState()` calls are handled in a macro task queue
 
 **You might be wondering how to prove that `setState()` itself is synchronous?**
-A classic example is: Prior to React 18, if you called `setState()` within `setTimeout()`, you would notice that it executes immediately. (In React 18, this issue has been addressed, and `setState()` calls made within `setTimeout()` are now asynchronous as well)
+A classic example is: Prior to React 18, if you called `setState()` within `setTimeout()`, you would notice that it executes immediately, as setState called in setTimeout or native events are not collected in the `updateQueue` of React. 
 
+(In React 18, this issue has been addressed, and `setState()` calls made within `setTimeout()` are now asynchronous as well)
 
 ## Microtask or Macrotask
 When updating, if React encounters a high-priority task, it will not execute the next low-priority task and schedule the highest-priority task to be executed.

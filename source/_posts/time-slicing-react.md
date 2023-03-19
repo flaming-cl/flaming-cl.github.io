@@ -29,7 +29,7 @@ This means we will not have time for style calculations, layout, paint and compo
 When this lasts for 2 or 3 seconds, users will feel your website is slow.
 
 ### How does React avoid this scenario?
-React sets up an interval for running JavaScript tasks in each frame. 
+React sets up an interval for running JavaScript tasks (5ms). 
 When running out of this interval, React will pause its current tasks and give back control to the main thread, letting it perform high priority tasks (painting or user events).
 After the main thread has finished prioritized jobs, React goes back to where it stopped and continues working.
 
