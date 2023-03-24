@@ -1,6 +1,8 @@
 ---
 title: Exploring the Benefits of Locality in Memory
 date: 2022-11-10 13:04:15
+tag: Memory
+
 ---
 As stated in Computer Systems: A Programmer's Perspective:
 > Well-written computer programs tend to exhibit good locality

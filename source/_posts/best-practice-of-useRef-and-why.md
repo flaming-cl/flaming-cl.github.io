@@ -1,7 +1,7 @@
 ---
 title: Best Practice of using ref in React hooks and Why
 date: 2023-02-28 15:54:29
-tags: #React
+tags: React
 ---
 
 In this article, we'll be discussing a best practice for using useRef in React, as well as delving into the reasons behind it.

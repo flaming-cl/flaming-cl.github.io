@@ -1,5 +1,5 @@
 ---
-title: React little by little 3 - Render Phase
+title: React Source Code Little by Little 3 - Render Phase
 date: 2023-01-13 08:41:00
 tags: React
 ---

@@ -1,5 +1,5 @@
 ---
-title:  React little by little 1 -  Time Slicing
+title:  React Source Code Little by Little 1 -  Time Slicing
 date: 2022-09-28 18:49:47
 tags: React
 ---
