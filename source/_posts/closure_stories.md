@@ -1,7 +1,7 @@
 ---
 title: Unraveling the Mystery Behind Closure with Stories
 date: 2023-03-02 20:30:37
-tags: JavaScript Closure
+tags: JavaScript
 ---
 
 Before I explain the concept of closure, let me share a story with you.
