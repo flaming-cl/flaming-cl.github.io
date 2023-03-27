@@ -1,5 +1,5 @@
 ---
-title: Best Practice of using ref in React hooks and Why
+title: Best Practice of using ref in React hooks
 date: 2023-02-28 15:54:29
 tags: React
 ---

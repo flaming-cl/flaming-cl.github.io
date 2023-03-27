@@ -1,10 +1,10 @@
 ---
-title: Recursion, Iteration, Function Abstraction from SICP Ch.1
+title: Recursion, Iteration, Function Abstraction
 date: 2023-03-26 19:45:35
 tags: Functional-Programming
 ---
 
-I've recently been reading SICP, and as many people have mentioned, this book truly teaches programming philosophy. I just finished the 1st chapter yesterday and wanted to share some of my thoughts and insights.
+I've recently been reading SICP, a book about programming philosophy. I just finished the 1st chapter yesterday and wanted to share some of my thoughts and insights.
 
 The main points in the 1st chapter that got me thinking were:
 
@@ -12,22 +12,23 @@ The main points in the 1st chapter that got me thinking were:
 2. How to abstract a function to make it more extensible and reusable
 
 ## Recursive or Iterative Processes
-To make it easier to understand, I'll start by discussing a topic that frontend developers may be more familiar with – React.
+To make it easier to understand, I'll start by discussing a topic that frontend developers are familiar with – React.
 
 ### Recursive Process
-The diff algorithm in React prior to version 16 is a prime example of a recursive process. 
+The diff algorithm in React prior to version 16 is a prime example of a recursive process.
+ 
 **Diff Algorithm**: To identify the changes in the Virtual DOM, React starts at the root node and recursively traverses down the tree. This process consists of expansion and contraction phases.
 
-#### Expansion Phase
-During the expansion phase, we move step by step from the root node, traversing more and more child nodes as we go deeper. We traverse the entire tree, reaching every little branch (when no bailout happens). 
+#### Expansion (beginWork)
+In the expansion phase, we traverse the virtual DOM tree from the root node, exploring child nodes step by step.
 
-#### Contraction Phase
-The contraction phase occurs when all child nodes have been traversed, and we need to return to the parent node. Then we proceed to a sibling of the parent node, or be back to parent's parent.
+#### Contraction (completeWork)
+During contraction, we return to the parent node after traversing all child nodes, then proceed to a sibling or parent's parent.
 
 #### A Story to Help You Visualize the Process
-![image_treasure_hunt](https://user-images.githubusercontent.com/51183663/227833411-f0bd9fd7-5451-4deb-b5fe-1c08484c4091.png)
-
 If the above explanation is still a bit unfamiliar to you, let me tell a story to help you visualize the process:
+
+![image_treasure_hunt](https://user-images.githubusercontent.com/51183663/227833411-f0bd9fd7-5451-4deb-b5fe-1c08484c4091.png)
 - You're playing a game where an unknown number of treasures are hidden within an underground maze's various rooms. 
 - Without a map, you venture deeper into each room to explore. 
 - At dead-ends, you backtrack to the nearest fork until you eventually return to the maze's entrance to end the game.
@@ -39,7 +40,7 @@ In this context, delving into deeper rooms symbolizes an expanding process, akin
 Now let us discuss another feature of recursion: **before completing the entire recursive process, we are unaware of the overall results, as we only focus on local problems.** 
 
 Going back to the treasure hunting story. 
-While exploring the maze, you are given a magical pocket that conceals all the treasures collected. Only upon completing the adventure, the pocket reveals your accumulated riches. 
+While exploring the maze, you are given a magical pocket to conceal all the treasures collected. Only upon completing the adventure, the pocket reveals your accumulated riches. 
 
 In this case, the uncertainty of your treasure hunting gains mirrors the ambiguity of progress in recursion, where a clear result emerges only upon task completion.
 #### Uninterruptible
@@ -50,23 +51,23 @@ Recursion can be difficult to interrupt and resume, making it hard to pause a ta
 ### Iterative Process
 Iterative processes are repeatable and build upon previous results, allowing for interruptions, resumptions, and data recording for continuity.
 
-Since React version 16, iteration has been using to traverse the DOM tree through a conditional loop. This enables prioritized tasks to interrupt and later resume the diff process using stored data, while maintaining expandable and contractible approaches to check a Fiber tree for detecting changes.
+Since React version 16, iteration has been using to traverse the DOM tree through a conditional loop. This enables prioritized tasks to interrupt and later resume the diff process using stored data. Also, it maintains expandable and contractible approaches to traverse a Fiber tree for detecting changes.
 ## Function Abstraction
 I think the most interesting part of this chapter is function abstraction.
 
-To explore the beauty of it, let's start with a simple and straightforward example, gradually improve it upon small initiatives. 
+To explore the beauty of it, let's start with a simple example, and gradually improve it upon small initiatives. 
 > Create a composite function that takes a number as input, and returns the cube of the number after adding 1.
 ```js
 const incAndCube = (x) => (x + 1) * (x + 1) * (x + 1);
 ```
-Here, it seems that repeatedly having `x + 1` is not good, so let's abstract it into a function. 
+Here, repeatedly having `x + 1` does not sound good. So let's abstract it into a function. 
 ```js
 const inc = (x) => x + 1;
 
 const incAndCube = (x) => inc(x) * inc(x) * inc(x);
 ```
 ### Higher-order Function
-Though our code looks a bit better, we are still repeating `inc` 3 times. Instead, let's pass `inc` as a parameter of `cube` to avoid repetitiveness. This way, by using a higher-order function in this case, we can create a more flexible and maintainable solution.
+Right now, though our code looks a bit better, we are still repeating `inc` 3 times. To improve this, let's pass `inc` as a parameter of `cube` to avoid repetitiveness. This way, by using a higher-order function in this case, we can create a more flexible and maintainable solution.
 ```js
 const inc = (x) => x + 1;
 
@@ -74,7 +75,7 @@ const cube = (x) => x * x * x;
 
 const incAndCube = (x) => cube(inc(x));
 ```
-Oops, you might feel like this doesn't make any difference. No worries, I feel the same way. 
+Oops, you might feel like it doesn't make any difference. To be honest, I feel the same way. 
 But don't worry, the process of iterative improvement often starts with small steps that may seem trivial. By continuously refining our code, we can achieve more extensible and reusable solutions.
 
 ### Recursion

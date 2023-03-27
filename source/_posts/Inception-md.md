@@ -1,5 +1,5 @@
 ---
-title: Grasping UseEffect Stale Closure with Movie Inception
+title: Grasping UseEffect Stale Closure with Inception
 date: 2023-03-18 23:45:30
 tags: React
 ---

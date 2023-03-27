@@ -1,5 +1,5 @@
 ---
-title: Unraveling the Mystery Behind Closure with Stories
+title: Demystifying Closures through Narratives
 date: 2023-03-02 20:30:37
 tags: JavaScript
 ---
