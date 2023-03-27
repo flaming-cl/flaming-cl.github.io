@@ -1,5 +1,5 @@
 ---
-title: Recursion, Iteration, Function Abstraction
+title: Recursion, Iteration and Abstraction from SICP
 date: 2023-03-26 19:45:35
 tags: Functional-Programming
 ---
@@ -12,7 +12,7 @@ The main points in the 1st chapter that got me thinking were:
 2. How to abstract a function to make it more extensible and reusable
 
 ## Recursive or Iterative Processes
-To make it easier to understand, I'll start by discussing a topic that frontend developers are familiar with – React.
+To make it easier to understand, I'll start by discussing a topic that many frontend developers are familiar with – React.
 
 ### Recursive Process
 The diff algorithm in React prior to version 16 is a prime example of a recursive process.
@@ -67,7 +67,7 @@ const inc = (x) => x + 1;
 const incAndCube = (x) => inc(x) * inc(x) * inc(x);
 ```
 ### Higher-order Function
-Right now, though our code looks a bit better, we are still repeating `inc` 3 times. To improve this, let's pass `inc` as a parameter of `cube` to avoid repetitiveness. This way, by using a higher-order function in this case, we can create a more flexible and maintainable solution.
+Right now, though our code looks a bit better, we are still repeating `inc` 3 times. To improve this, let's pass `inc` as a parameter of `cube`, to make `cube` a higher-order function and avoid repetitiveness. By using a higher-order function in this case, we can create a more flexible and maintainable solution.
 ```js
 const inc = (x) => x + 1;
 
@@ -75,15 +75,18 @@ const cube = (x) => x * x * x;
 
 const incAndCube = (x) => cube(inc(x));
 ```
-Oops, you might feel like it doesn't make any difference. To be honest, I feel the same way. 
-But don't worry, the process of iterative improvement often starts with small steps that may seem trivial. By continuously refining our code, we can achieve more extensible and reusable solutions.
+In this way, if future requirements involve adding 1 then squaring, we can easily switch `cube` to `square` without changing it in three places.
+
+You might feel like it doesn't make any difference. But don't worry, the process of iterative improvement often starts with small steps that may seem trivial. By continuously refining our code, we can achieve more extensible and reusable solutions.
 
 ### Recursion
+You might feel that the `cube` function does not appear very extensible: what if the requirement changes to multiplying a number by itself 999 times?
+
 To make the cube function more extensible, we can create a recursive `repeat` function which accepts a parameter representing the number of repetitions.
 
 #### Expansion
-**Think about this question: what will happen if we use `repeat` to multiply a number by itself 1000 times?** 
-We will first come to the expansion phase, as it will generate a massive expression involving 1000 multiplication operations. For example, `x * x` for once, `(x * x) * x` for twice.
+**Let's think about this question: what will happen if we use `repeat` to multiply a number by itself 999 times?** 
+We will first come to the expansion phase, as it will generate a massive expression involving 999 multiplication operations gradually. For example, `x * x` for once, `(x * x) * x` for twice.
 
 #### Contraction
 After finished the expansion phase, we start to shrink the large expression to a single number. We can do this by having `(result of each multiplication) * (next number)`.
@@ -106,6 +109,12 @@ const incAndCube = (x) => cube(inc(x));
 #### Explanation with Code
 - **Expansion phase**: The `repeat` function, when called with `x` and `n`, will recursively call itself until `n` is reduced to `0`. During this process, it creates an expression that multiplies `x` by itself `n` times, e.g., `x * x` for once, `(x * x) * x` for twice, and so on.
 - **Contraction phase**: When `n` reaches `0`, the base case is met, and the recursion starts unwinding. As it returns from each recursive call, it contracts the expression by successively multiplying the result of each multiplication by the next number. Eventually, it arrives at the final result, which is `x` multiplied by itself `n` times.
+
+#### Explanation with Inception
+If you want a more intuitive understanding of this process, think of the movie Inception.
+- **Expansion**: main characters delves deeper into dreams, layer by layer.
+- **Base case met**: at the moment the mission is completed, the base case is reached.
+- **Contraction**: everyone employs a 'kick' to sequentially fall through dream layers, ultimately returning to reality (layer 0).
 
 Now we have successfully abstracted the `cube` function and made it more extensible. 🎉🎉
 
@@ -167,6 +176,6 @@ Functional programming offers advantages in some cases, but it's not always the 
 
 The original, straightforward definition of incAndCube with three `x + 1` multiplications is already simple and easy to understand. In cases where reusability and extensibility aren't required, this approach saves programming time and remains clear to other developers.
 
-However, for large-scale projects with potentially changing requirements, single-function and simpler functions are more resilient. For example, if the inc logic changed from `x + 1` to `x + 2`, the original code would need to be modified in 3 places, possibly introducing unpredictable issues.
+However, in large-scale projects with possible shifting requirements, single-purpose and straightforward functions prove more robust. Consider our basic `inc` function: if its logic changed from `x + 1` to `x + 2`, we'd have to modify the original code in three places. If the function were more much complex than `inc`, multiple updates may introduce unforeseen problems.
 
 In conclusion, each programming method has its strengths. While functional programming might seem more advanced, it's not a one-size-fits-all solution. It's essential to choose the appropriate approach based on the specific situation and project requirements.
