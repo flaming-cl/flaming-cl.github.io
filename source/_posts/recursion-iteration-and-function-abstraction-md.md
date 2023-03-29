@@ -17,7 +17,7 @@ To make it easier to understand, I'll start by discussing a topic that many fron
 ### Recursive Process
 The diff algorithm in React prior to version 16 is a prime example of a recursive process.
  
-**Diff Algorithm**: To identify the changes in the Virtual DOM, React starts at the root node and recursively traverses down the tree. This process consists of expansion and contraction phases.
+**Diff Algorithm**: To identify the changes in the Virtual DOM, React starts at the root node and recursively traverses the tree. This process consists of expansion and contraction phases.
 
 #### Expansion (beginWork)
 In the expansion phase, we traverse the virtual DOM tree from the root node, exploring child nodes step by step.
@@ -75,7 +75,6 @@ const cube = (x) => x * x * x;
 
 const incAndCube = (x) => cube(inc(x));
 ```
-In this way, if future requirements involve adding 1 then squaring, we can easily switch `cube` to `square` without changing it in three places.
 
 You might feel like it doesn't make any difference. But don't worry, the process of iterative improvement often starts with small steps that may seem trivial. By continuously refining our code, we can achieve more extensible and reusable solutions.
 

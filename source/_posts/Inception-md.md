@@ -28,7 +28,7 @@ Inception is one of my favorite movie. Its protagonist can create and navigate m
 You can think of React as a dream scene architect, where each time you call `setState`, it's like pressing a button to construct a new dream layer.
 
 So if you trigger `setState` after the App's first render, you're signaling React to initiate a new layer of rendering snapshot. 
-This means that **even though a new rendering has been completed, there can still be functions referring to the data from the first rendering**. Here comes in what we called the `useEffect` stale closure pitfall, as seen in this code snippet:
+However, **even though a new rendering has been completed, there can still be functions referring to the data from the first rendering**. Here comes in what we called the `useEffect` stale closure pitfall, as seen in this code snippet:
 ```js
 export default function App() {
   const [count, setCount] = useState(0);
