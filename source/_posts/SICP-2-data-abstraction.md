@@ -97,7 +97,7 @@ print_point(mid);
 
 It looks like our plain method code is concise and readable.
 
-**However, is the code of the plain method easier to maintain than the code using the data abstraction method?**
+**However, is the plain method easier to maintain than data abstraction method?**
 #### Potential problems with plain implementation
 Suppose in the future, the data structure of a point becomes an array `[2, 4]`. 
 
@@ -157,9 +157,33 @@ const segment = make_segment(make_point(1, 2), make_point(5, 6));
 const midpoint = midpoint_segment(segment);
 print_point(midpoint);
 ```
-Now, do you prefer to individually wrap each cookie or leave them scattered together?
+Now, do you prefer to individually wrap your data or leave them scattered together?
 
 ![cookies](https://user-images.githubusercontent.com/51183663/229636030-e3139501-6c8c-46a8-a568-a5961740a6a1.png)
 
-My Tip: I still don't think one should stubbornly adhere to a certain method.
-But next time if I anticipate significant changes to a data structure in the future, I will consider using data abstraction to encapsulate the data, for more resilient code.
+### Data abstraction V.S. Adaptor pattern
+My Tip: My Tip: I still don’t think one should stubbornly adhere to a certain method.
+
+When we find certain data is used scatteredly in a project, especially the project may develop into a large-scale project, we can consider using data abstraction.
+
+In addition, when facing data changes, another approach is to use the adaptor pattern. Below is a simple comparison between the adaptor pattern and data abstraction:
+
+#### Adaptors
+**Pros**
+- Allows easier integration of existing code with new interfaces or data structures.
+- Enables reuse of existing code with minimal modifications.
+- Can provide a temporary solution for integrating incompatible systems while working on a more permanent solution.
+
+**Cons**
+- Adds an extra layer of complexity, making code harder to understand and maintain.
+- May not provide a long-term solution, requiring more refactoring in the future.
+- Potentially loses some benefits of data abstraction by not fully encapsulating the implementation details.
+
+#### Data Abstraction
+**Pros**
+- Encapsulates implementation details, allowing for cleaner and more maintainable code.
+- Simplifies code changes by limiting the impact of modifications to the constructor and selector functions.
+- Promotes better separation of concerns and modularity in the application.
+
+**Cons**
+- Requires initial investment in creating constructors and selectors.
