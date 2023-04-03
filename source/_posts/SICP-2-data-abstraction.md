@@ -1,21 +1,21 @@
 ---
-title: Data Abstraction or Adapters?
+title: Data Abstraction from SICP
 date: 2023-03-27 20:14:53
 tags: Functional-Programming
 ---
 
-世界是千变万化的，需求也可能会变化。我们的代码也应该能够适应这种变化。在这篇文章中，我将会讨论如何在不大量修改代码的情况下，让代码能够适应需求的变化。
-我觉得 Data abstraction 和 Adapters 虽然都是应对需求变化的方法，但我们使用它们的时机是很不同的。
-深思熟虑：我们在面对一个新的需求的时候，应该先考虑使用 Data abstraction，尽可能地把数据操作和业务逻辑分离开来。
-亡羊补牢：而当我们的已有设计不能满足新的需求的时候，我们应该考虑使用 Adapters。
-
 ### Data Abstraction
- In functional programming, data abstraction means using functions to encapsulate data structures, and accessing the data through a well-defined interface provided by those functions. This way, the rest of the program does not have to deal with the details of the data structure, but only with the abstraction layer provided by the functions.
+In functional programming, data abstraction is a technique that uses functions to hide the details of data structures, and provides a well-defined interface for accessing the data. In this way, the rest of the program does not have to deal with the details of the data structure, but only with the abstraction layer provided by the functions.
 
-This approach makes it easier to modify the data structure in the future, because changes to the data structure can be made by changing the implementation of the functions that encapsulate it, without affecting the rest of the program. This helps to minimize the impact of changes to the data structure on the overall codebase, and can make it easier to maintain and extend the code in the long term.
+By encapsulating the data structure, it also becomes easier to modify it in the future. Changes to the data structure can be made by adjusting the implementation of the functions that encapsulate it, without affecting the rest of the program.
 
+This article will show you how to use data abstraction to minimize the impact of unpredictable data changes to your program.
+
+### Example: Data abstraction V.S. a plain data handling method
+> Write a function `midpoint_segment` to find out the middle point of a certain segment.
+
+First, let's take a look at how to implement `midpoint_segment` with data abstraction.
 ```js
-// 构造函数 make_point，以 x 和 y 为参数，返回一个点对象
 function make_point(x, y) {
   return {
     x: x,
@@ -23,17 +23,14 @@ function make_point(x, y) {
   };
 }
 
-// 选择器 x_point，返回点对象的 x 坐标
 function x_point(point) {
   return point.x;
 }
 
-// 选择器 y_point，返回点对象的 y 坐标
 function y_point(point) {
   return point.y;
 }
 
-// 构造函数 make_segment，以 start 和 end 为参数，返回一个线段对象
 function make_segment(start, end) {
   return {
     start: start,
@@ -41,17 +38,14 @@ function make_segment(start, end) {
   };
 }
 
-// 选择器 start_segment，返回线段对象的起点
 function start_segment(segment) {
   return segment.start;
 }
 
-// 选择器 end_segment，返回线段对象的终点
 function end_segment(segment) {
   return segment.end;
 }
 
-// 函数 midpoint_segment，以线段对象为参数，返回其中点的坐标
 function midpoint_segment(segment) {
   const start = start_segment(segment);
   const end = end_segment(segment);
@@ -60,33 +54,28 @@ function midpoint_segment(segment) {
   return make_point(mid_x, mid_y);
 }
 
-// 打印点的方法
 function print_point(point) {
   console.log(`(${x_point(point)}, ${y_point(point)})`);
 }
 
-// 测试 midpoint_segment 函数
 const segment = make_segment(make_point(1, 2), make_point(5, 6));
 const midpoint = midpoint_segment(segment);
-print_point(midpoint); // 输出 (3, 4)
-
+print_point(midpoint);
 ```
+In this case, we simply wrap the data definitions and retrieval operations with functions. By doing so, we avoid exposing the point data to the implementation logic of midpoint_segment. You may think this is redundant and cumbersome, but let's not jump to conclusions yet and keep reading.
 
-
+Now we use a plain method to implement `midpoint_segment`.
 ```js
-// 构造函数 Point，以 x 和 y 为参数，返回一个表示点的对象
 function Point(x, y) {
   this.x = x;
   this.y = y;
 }
 
-// 构造函数 Segment，以 start 和 end 为参数，返回一个表示线段的对象
 function Segment(start, end) {
   this.start = start;
   this.end = end;
 }
 
-// 函数 midpoint，以一个线段对象为参数，返回其中点的坐标
 function midpoint(segment) {
   const start = segment.start;
   const end = segment.end;
@@ -95,138 +84,82 @@ function midpoint(segment) {
   return new Point(mid_x, mid_y);
 }
 
-// 打印点的方法
 function print_point(point) {
   console.log(`(${point.x}, ${point.y})`);
 }
 
-// 测试 Segment 和 midpoint 函数
 const start = new Point(1, 2);
 const end = new Point(5, 6);
 const segment = new Segment(start, end);
 const mid = midpoint(segment);
-print_point(mid); // 输出 (3, 4)
-
+print_point(mid);
 ```
 
-|                    | Adapters                          | Data Abstraction                     |
-|--------------------|-----------------------------------|-------------------------------------|
-| **Pros**           |                                   |                                     |
-| 1.                 | Allows easier integration of      | Encapsulates implementation         |
-|                    | existing code with new interfaces | details, allowing for cleaner       |
-|                    | or data structures.               | and more maintainable code.         |
-| 2.                 | Enables reuse of existing code    | Simplifies code changes by          |
-|                    | with minimal modifications.       | limiting the impact of              |
-|                    |                                   | modifications to the constructor    |
-|                    |                                   | and selector functions.             |
-| 3.                 | Can provide a temporary           | Promotes better separation of       |
-|                    | solution for integrating          | concerns and modularity in the      |
-|                    | incompatible systems while        | application.                        |
-|                    | working on a more permanent       |                                     |
-|                    | solution.                         |                                     |
-| **Cons**           |                                   |                                     |
-| 1.                 | Adds an extra layer of            | Requires initial investment in      |
-|                    | complexity, making code harder    | creating constructors and           |
-|                    | to understand and maintain.       | selectors.                          |
-| 2.                 | May not provide a long-term       |                                     |
-|                    | solution, requiring more          |                                     |
-|                    | refactoring in the future.        |                                     |
-| 3.                 | Potentially loses some benefits   |                                     |
-|                    | of data abstraction by not        |                                     |
-|                    | fully encapsulating the           |                                     |
-|                    | implementation details.           |                                     |
+It looks like our plain method code is concise and readable.
 
-### Real world examples
-### Data Abstraction
-Express.js uses data abstraction in several ways, most notably in the way it represents and manipulates HTTP requests and responses. In Express.js, request and response objects are abstracted into req and res objects that can be passed to middleware and route handlers. This makes it easier for developers to work with HTTP requests and responses without worrying about their underlying implementation.
-Request and Response objects: The req and res objects in Express.js are data abstractions that provide a simplified interface for working with HTTP requests and responses. They encapsulate the complexity of working with raw HTTP messages and provide methods and properties for easy manipulation.
-```js
-app.get('/example', (req, res) => {
-  const userAgent = req.get('User-Agent');
-  const queryParams = req.query;
-  res.send(`Hello, your user agent is: ${userAgent}, query params: ${JSON.stringify(queryParams)}`);
-});
+**However, is the code of the plain method easier to maintain than the code using the data abstraction method?**
+#### Potential problems with plain implementation
+Suppose in the future, the data structure of a point becomes an array `[2, 4]`. 
 
-```
-In this example, the req.get() method is used to get the User-Agent header, and req.query is used to access the query parameters of the request. These abstractions simplify working with HTTP requests.
-### Adapter
-Adapter Example: Ghost's Storage Adapter
-Ghost uses adapters for its storage system, allowing users to switch between different storage providers (e.g., local storage, Amazon S3, Google Cloud Storage).
+Now, we need to make changes to the implementation of the plain method in all the code that uses `point.x` and `point.y`.
 
-Here's an example of a storage adapter for Ghost called ghost-storage-adapter-s3:
-```js
-const AWS = require('aws-sdk');
-const BaseAdapter = require('ghost-storage-base');
+However, experienced programmers know that modifying code in multiple places in a complex project is a **dangerous** signal. No one knows what unknown effects will happen when we let the butterfly flap its wings in a certain piece of code.
 
-class S3Adapter extends BaseAdapter {
-    constructor(config) {
-        super();
-        AWS.config.update(config);
-        this._client = new AWS.S3();
-        ...
-    }
+A better way is to try our best to avoid make many changes to our existing code. 
 
-    exists(fileName, targetDir) {
-        ...
-    }
+#### Why data abstraction helps you to build robust programs
+Now, we look at our code implemented with data abstraction.
 
-    save(image, targetDir) {
-        ...
-    }
-
-    serve() {
-        ...
-    }
-
-    delete(fileName, targetDir) {
-        ...
-    }
-
-    read(options) {
-        ...
-    }
-}
-
-module.exports = S3Adapter;
-```
+You will find you don't have to search through the whole project to find out how many times you used `point.x` or `point.y`. 
+Although you still make a small number of changes, you at least have an overall understanding of its impact to the whole project, reducing the possibility of unknown bugs caused by code modifications.
 
 ```js
-function make_rat(n, d) {
-  const g = gcd(n, d);
-  return pair(n / g, d / g);
+function make_point(x, y) {
+  return [x, y];
 }
 
-function numer(x) {
-  return head(x);
+function x_point(point) {
+  return point[0];
 }
 
-function denom(x) {
-  return tail(x);
+function y_point(point) {
+  return point[1];
 }
 
-function add_rat(x, y) {
-  return make_rat(numer(x) * denom(y) + numer(y) * denom(x), denom(x) * denom(y));
+function make_segment(start, end) {
+  return {
+    start: start,
+    end: end
+  };
 }
 
-function sub_rat(x, y) {
-  return make_rat(numer(x) * denom(y) - numer(y) * denom(x), denom(x) * denom(y));
+function start_segment(segment) {
+  return segment.start;
 }
 
-function mul_rat(x, y) {
-  return make_rat(numer(x) * numer(y), denom(x) * denom(y));
+function end_segment(segment) {
+  return segment.end;
 }
 
-function div_rat(x, y) {
-  return make_rat(numer(x) * denom(y), denom(x) * numer(y));
+function midpoint_segment(segment) {
+  const start = start_segment(segment);
+  const end = end_segment(segment);
+  const mid_x = (x_point(start) + x_point(end)) / 2;
+  const mid_y = (y_point(start) + y_point(end)) / 2;
+  return make_point(mid_x, mid_y);
 }
 
-function equal_rat(x, y) {
-  return numer(x) * denom(y) === numer(y) * denom(x);
+function print_point(point) {
+  console.log(`(${x_point(point)}, ${y_point(point)})`);
 }
 
-function print_rat(x) {
-  display(numer(x));
-  display("/");
-  display(denom(x));
-}
+const segment = make_segment(make_point(1, 2), make_point(5, 6));
+const midpoint = midpoint_segment(segment);
+print_point(midpoint);
 ```
+Now, do you prefer to individually wrap each cookie or leave them scattered together?
+
+![cookies](https://user-images.githubusercontent.com/51183663/229636030-e3139501-6c8c-46a8-a568-a5961740a6a1.png)
+
+My Tip: I still don't think one should stubbornly adhere to a certain method.
+But next time if I anticipate significant changes to a data structure in the future, I will consider using data abstraction to encapsulate the data, for more resilient code.

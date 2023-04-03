@@ -84,8 +84,4 @@ Let’s recap the concept of closure:
 
 By now, you should have a grasp of what closure is.
 
-However, sometimes when people talk about closure, they are not referring to the precise concept of closure. For instance, you might hear people mentioning the term 'closure,' but what they're actually referring to is:
-
-*They have a function that does not reference data from the lexical scope they expected.*
-
-An example of this is Stale Closure, which often appears in React hooks and is a pain for many beginners. In the next blog post, I will discuss the Stale Closure issue in React hooks in more detail.
+A troublesome example of closure in React is Stale Closure, which often appears in React hooks and is a pain for many beginners. In the future blog post, I will discuss the Stale Closure issue in React hooks in more detail.
