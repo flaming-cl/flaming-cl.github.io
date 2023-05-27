@@ -62,7 +62,7 @@ const segment = make_segment(make_point(1, 2), make_point(5, 6));
 const midpoint = midpoint_segment(segment);
 print_point(midpoint);
 ```
-In this case, we simply wrap the data definitions and retrieval operations with functions. By doing so, we avoid exposing the point data to the implementation logic of midpoint_segment. You may think this is redundant and cumbersome, but let's not jump to conclusions yet and keep reading.
+In this case, we simply wrap the data definitions and retrieval operations with functions. By doing so, we avoid exposing the point data to the implementation logic of `midpoint_segment`. You may think this is redundant and cumbersome, but let's not jump to conclusions yet and keep reading.
 
 Now we use a plain method to implement `midpoint_segment`.
 ```js
@@ -126,43 +126,13 @@ function y_point(point) {
   return point[1];
 }
 
-function make_segment(start, end) {
-  return {
-    start: start,
-    end: end
-  };
-}
-
-function start_segment(segment) {
-  return segment.start;
-}
-
-function end_segment(segment) {
-  return segment.end;
-}
-
-function midpoint_segment(segment) {
-  const start = start_segment(segment);
-  const end = end_segment(segment);
-  const mid_x = (x_point(start) + x_point(end)) / 2;
-  const mid_y = (y_point(start) + y_point(end)) / 2;
-  return make_point(mid_x, mid_y);
-}
-
-function print_point(point) {
-  console.log(`(${x_point(point)}, ${y_point(point)})`);
-}
-
-const segment = make_segment(make_point(1, 2), make_point(5, 6));
-const midpoint = midpoint_segment(segment);
-print_point(midpoint);
+// no changes to the rest of the code
 ```
-Now, do you prefer to individually wrap your data or leave them scattered together?
+Now, do you prefer to individually wrap your data or leave them scattered?
 
-![cookies](https://user-images.githubusercontent.com/51183663/229636030-e3139501-6c8c-46a8-a568-a5961740a6a1.png)
-
+![cookies](https://user-images.githubusercontent.com/51183663/229660566-833b648b-bed0-4ee1-ba1c-5a80913ebd74.png))
 ### Data abstraction V.S. Adaptor pattern
-My Tip: My Tip: I still don’t think one should stubbornly adhere to a certain method.
+My Tip: I still don’t think one should stubbornly adhere to a certain method.
 
 When we find certain data is used scatteredly in a project, especially the project may develop into a large-scale project, we can consider using data abstraction.
 
