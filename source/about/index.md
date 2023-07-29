@@ -3,7 +3,7 @@ title: About
 type: about
 ---
 
-Developer in 🇨🇦, specialized in React.js web dev.
+Front End Developer
 
 
 

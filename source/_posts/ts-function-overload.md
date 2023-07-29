@@ -1,5 +1,5 @@
 ---
-title: Demystifying TypeScript Function Overloads
+title: TypeScript Function Overloads
 date: 2023-07-03 09:42:34
 tags: TypeScript
 ---
@@ -50,11 +50,11 @@ Looking at the above code, you'll notice a function, makeDate, which can be invo
 
 From a purely technical perspective, you wouldn't be wrong. However, this is where we introduce an important concept in TypeScript: Function Overloading. With the first two function overloads, we're enhancing the development experience when calling makeDate by leaps and bounds.
 
-![Screenshot 2023-07-29 at 19 30 35](https://github.com/flaming-cl/FE-pitfalls/assets/51183663/b7d4b169-88c7-4ad0-818c-69b8af988c4f)
+![Screenshot 2023-07-29 at 19 30 35](https://github.com/flaming-cl/flaming-cl.github.io/assets/51183663/c53243a2-d914-43c5-ab91-4c7dbeb81301)
 
-![Screenshot 2023-07-29 at 19 30 52](https://github.com/flaming-cl/FE-pitfalls/assets/51183663/4a293bdc-8d22-43bd-a273-d2683ce48183)
+![Screenshot 2023-07-29 at 19 30 52](https://github.com/flaming-cl/flaming-cl.github.io/assets/51183663/b9fc33cb-fd0d-45ac-9504-5121c24c62a8)
 
-![Screenshot 2023-07-29 at 19 31 18](https://github.com/flaming-cl/FE-pitfalls/assets/51183663/b44b58c9-fc38-446f-866e-79b8339c468d)
+![Screenshot 2023-07-29 at 19 31 18](https://github.com/flaming-cl/flaming-cl.github.io/assets/51183663/a35e3d00-654f-4c7f-97fc-6d67c06770cb)
 
 With the above screenshots, you must have a much clearer idea about why we use function overloading. Yes, when a developer invokes `makeDate` with a single argument, TypeScript knows that this argument is a timestamp (defined in the first overload). And it won't prompt the developer for the additional parameters d and y. **In essence, overloads provide enhanced type checking and better autocompletion support in editors.** 
 
