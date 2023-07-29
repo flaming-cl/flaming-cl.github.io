@@ -1,5 +1,5 @@
 ---
-title: CS143 Compiler: Basic concepts
+title: CS143 Compiler - Basic concepts
 date: 2023-05-27 16:12:38
 tags: compiler
 ---
@@ -29,7 +29,7 @@ This is hard and compilers can only do very limited kinds of semantic analysis. 
 > Jack said Jerry left his assignment at home
 
 Do you know whose assignment Jack was talking about?
-Yes, in English or any other language, we experience ambiguity. But programming languages do not have that much tolerance for ambiguity. So we need to do semantic analysis to ensure that the meaning of each statement in the program is clear and unambiguous. 
+Yes, in English or any other language, we experience ambiguity. But programming languages do not have that much tolerance as human languages do. So we need to do semantic analysis to ensure that the meaning of each statement in the program is clear and unambiguous. 
 
 #### Example: Type check
 This involves checking for type mismatches, ensuring that variables are declared before they are used, checking that functions are called with the correct number of arguments, and so on.
